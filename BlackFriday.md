@@ -1,14 +1,19 @@
 ## Pytyhon Libraries 
 import pandas as pd
+
 import numpy as np
+
 import matplotlib.pyplot as plt
+
 import seaborn as sns
+
 import warnings
 warnings.filterwarnings('ignore')
 %matplotlib inline
 
 ## Datasets
 df_train=pd.read_csv('train.csv')
+
 df_test=pd.read_csv('test.csv')
 
 ## Merge Datasets with Concat
@@ -16,13 +21,21 @@ df = pd.concat([df_train, df_test], ignore_index=True)
 
 ## Cleaning Dataset
 df.drop(['User_ID'],axis=1,inplace=True)
+
 df['Gender']=df['Gender'].map({'F':0,'M':1,np.nan:1})
+
 df['Age']=df['Age'].map({'0-17':1,'18-25':2,'26-35':3,'36-45':4,'46-50':5,'51-55':6,'55+':7,np.nan:1})
+
 df['City_Category']=df['City_Category'].map({'A':1,'B':2,'C':3,np.nan:1})
+
 df['Product_Category_2']=df['Product_Category_2'].fillna(df['Product_Category_2'].mode()[0])
+
 df['Product_Category_3']=df['Product_Category_3'].fillna(df['Product_Category_3'].mode()[0])
+
 df['Stay_In_Current_City_Years']=df['Stay_In_Current_City_Years'].str.replace('+','')
+
 df['Stay_In_Current_City_Years']=df['Stay_In_Current_City_Years'].fillna(df['Stay_In_Current_City_Years'].mode()[0])
+
 df['Stay_In_Current_City_Years']=df['Stay_In_Current_City_Years'].astype(int)
 
 ## Visualiuzation
@@ -36,7 +49,9 @@ df['Stay_In_Current_City_Years']=df['Stay_In_Current_City_Years'].astype(int)
 ## Feature Scaling
 
 X=df_train.drop('Purchase',axis=1)
+
 Y=df_train['Purchase']
+
 
 from sklearn.model_selection import train_test_split
 X_train,X_test,Y_train,Y_test=train_test_split(X,Y,test_size=0.33,random_state=42)
@@ -62,8 +77,11 @@ The function returns four variables:
 
 
 from sklearn.preprocessing import StandardScaler
+
 scaler=StandardScaler()
+
 X_train=scaler.fit_transform(X_train)
+
 X_test=scaler.transform(X_test)
 
 
